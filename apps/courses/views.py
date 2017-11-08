@@ -8,6 +8,7 @@ from operations.models import UserFav
 
 class CourseListView(View):
     def get(self,request):
+        active = 'yanse'
         all_courses = Course.objects.all().order_by('-add_time')
         hot_courses = all_courses.order_by('-click_nums')[:3]
         sort = request.GET.get('sort','')
@@ -29,6 +30,7 @@ class CourseListView(View):
             'all_courses':all_courses,
             'sort':sort,
             'hot_courses':hot_courses,
+            'active':active,
         })
 
 

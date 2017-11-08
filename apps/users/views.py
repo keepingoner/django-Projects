@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.backends import ModelBackend
-from .models import UserProfile,EmailVerifyRecord
+from .models import UserProfile,EmailVerifyRecord,Banner
 from django.db.models import Q
 from django.views.generic import View
 from .forms import Login_form,Register_form,ForgetPwd_form,Reset_form
 from  django.contrib.auth.hashers import make_password
 from  utils.send_mail import register_seng_mail
+from courses.models import Course
+from organizations.models import CourseOrg
 # Create your views here.
 
 class CustomBackend(ModelBackend):
@@ -42,7 +44,7 @@ class user_login(View):
             else:
                 return render(request, 'login.html', {'msg': '用户名或密码有误'})
         else:
-            return render(request,'login.html',{ 'login_form':login_form})
+            return render(request,'login.html',{ 'login_form':login_form    })
 
 
 class user_register(View):
@@ -126,6 +128,27 @@ class modify_pwd(View):
                 return render(request,'password_reset.html',{'email':email,'msg':'两次密码输入不一致'})
         else:
             return render(request, 'password_reset.html', { 'msg':'输入有误'})
+
+
+class user_logout(View):
+    def get(self, request):
+        logout(request)
+        return render(request, 'index.html')
+
+
+class IndexView(View):
+    def get(self,request):
+        all_banners = Banner.objects.all().order_by("index")
+        courses = Course.objects.filter()[:5]
+        banner_courses = Course.objects.filter()[:3]
+        course_orgs = CourseOrg.objects.all()[:3]
+
+        return render(request,'index.html',{
+            'all_banners':all_banners,
+            'banner_courses':banner_courses,
+            'courses':courses,
+            'course_orgs':course_orgs,
+        })
 
 
 

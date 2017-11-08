@@ -29,20 +29,20 @@
 
 						<div class="personal">
                             <dl class="user fr">
-                                <dd>smoker<img class="down fr" src="/static/images/top_down.png"/></dd>
-                                <dt><img width="20" height="20" src="/static/media/image/2016/12/default_big_14.png"/></dt>
+                                <dd>{{ request.user }}<img class="down fr" src="/static/images/top_down.png"/></dd>
+                                <dt><img width="20" height="20" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
                             </dl>
                             <div class="userdetail">
                             	<dl>
-	                                <dt><img width="80" height="80" src="/static/media/image/2016/12/default_big_14.png"/></dt>
+	                                <dt><img width="80" height="80" src="{{ MEDIA_URL }}{{ request.user.image }}"/></dt>
 	                                <dd>
-	                                    <h2>django</h2>
-	                                    <p>smoker</p>
+	                                    <h2>{{ request.user.nick_name }}</h2>
+	                                    <p>{{ request.user }}</p>
 	                                </dd>
                                 </dl>
                                 <div class="btn">
 	                                <a class="personcenter fl" href="usercenter-info.html">进入个人中心</a>
-	                                <a class="fr" href="/logout/">退出</a>
+	                                <a class="fr" href="{% url 'userlogout' %}">退出</a>
                                 </div>
                             </div>
                         </div>
@@ -87,8 +87,8 @@
 				<div class="nav">
 					<div class="wp">
 						<ul>
-							<li class="active" ><a href="{% url 'index' %}">首页</a></li>
-							<li >
+							<li  ><a href="{% url 'index' %}">首页</a></li>
+							<li {% ifequal active 'yanse' %} class="active"{% endifequal %}>
 								<a href="{% url 'course:course_list' %}">
 									公开课<img class="hot" src="/static/images/nav_hot.png">
 								</a>

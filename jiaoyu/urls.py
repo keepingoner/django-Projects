@@ -16,14 +16,15 @@ Including another URLconf
 from django.conf.urls import url,include
 from django.contrib import admin
 import xadmin
-from django.views.generic import TemplateView
-from users.views import user_login,user_register,active_user,forget_pwd,reset_pwd,modify_pwd
-from organizations.views import OrgList
+#from django.views.generic import TemplateView
+from users.views import user_login,user_register,active_user,forget_pwd,reset_pwd,modify_pwd,user_logout,IndexView
 from django.conf.urls.static import static
 from jiaoyu.settings import MEDIA_ROOT,MEDIA_URL
+
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
-    url(r'^$',TemplateView.as_view(template_name='index.html'),name='index'),
+    #url(r'^$',TemplateView.as_view(template_name='index.html'),name='index'),
+    url(r'^$',IndexView.as_view(),name='index'),
     url(r'^userlogin$',user_login.as_view(),name='userlogin'),
     url(r'^register/$',user_register.as_view(),name='register'),
     url(r'^captcha/', include('captcha.urls')),
@@ -33,4 +34,5 @@ urlpatterns = [
     url(r'^modify/$',modify_pwd.as_view(),name='modify'),
     url(r'^org/',include('organizations.urls',namespace='org')),
     url(r'^course/',include('courses.urls',namespace='course')),
+    url(r'^userlogout$', user_logout.as_view(), name='userlogout'),
 ]+static(MEDIA_URL,document_root=MEDIA_ROOT)

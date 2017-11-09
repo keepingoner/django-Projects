@@ -3,7 +3,7 @@ from django.views.generic import View
 from organizations.models import CityDict,CourseOrg,Teacher
 from pure_pagination import Paginator, EmptyPage, PageNotAnInteger
 from .forms import UserAskForm
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from operations.models import UserFav
 # Create your views here.
 
@@ -182,3 +182,5 @@ class TeacherDetailView(View):
             'teacher':teacher,
             'pteachers':pteachers,
         })
+
+

@@ -34,5 +34,10 @@ urlpatterns = [
     url(r'^modify/$',modify_pwd.as_view(),name='modify'),
     url(r'^org/',include('organizations.urls',namespace='org')),
     url(r'^course/',include('courses.urls',namespace='course')),
-    url(r'^userlogout$', user_logout.as_view(), name='userlogout'),
+    url(r'^logout$', user_logout.as_view(), name='userlogout'),
 ]+static(MEDIA_URL,document_root=MEDIA_ROOT)
+
+
+handler404 = 'users.views.page_no_found'
+
+handler500 = 'users.views.page_error'

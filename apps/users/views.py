@@ -9,6 +9,7 @@ from  django.contrib.auth.hashers import make_password
 from  utils.send_mail import register_seng_mail
 from courses.models import Course
 from organizations.models import CourseOrg
+from django.http import HttpResponse,HttpResponseRedirect
 # Create your views here.
 
 class CustomBackend(ModelBackend):
@@ -38,7 +39,8 @@ class user_login(View):
                 if user.is_active:
 
                     login(request,user)
-                    return render(request, 'index.html')
+                    from django.core.urlresolvers import reverse
+                    return HttpResponseRedirect(reverse('index.html'))
                 else:
                     return render(request,'login.html',{'msg':'用户未激活'})
             else:
@@ -133,27 +135,51 @@ class modify_pwd(View):
 class user_logout(View):
     def get(self, request):
         logout(request)
-        return render(request, 'index.html')
+        from django.core.urlresolvers import reverse
+        return HttpResponseRedirect(reverse('index.html'))
+
+
 
 
 class IndexView(View):
     def get(self,request):
         all_banners = Banner.objects.all().order_by("index")
-        courses = Course.objects.filter()[:5]
-        banner_courses = Course.objects.filter()[:3]
-        course_orgs = CourseOrg.objects.all()[:3]
+        courses = Course.objects.filter()[:6]
+        banner_courses = Course.objects.filter()[:5]
+        course_orgs = CourseOrg.objects.all()[:25]
 
-        return render(request,'index.html',{
-            'all_banners':all_banners,
-            'banner_courses':banner_courses,
-            'courses':courses,
-            'course_orgs':course_orgs,
+        return render(request, 'index.html', {
+            'all_banners': all_banners,
+            'banner_courses': banner_courses,
+            'courses': courses,
+            'course_orgs': course_orgs,
         })
 
 
 
 
+def page_no_found(request):
+    """
+    全局404
+    :param request:
+    :return:
+    """
+    from django.shortcuts import render_to_response
+    response = render_to_response('404.html',{})
+    response.status_code = 404
+    return response
 
+
+def page_error(request):
+    """
+    全局500
+    :param request:
+    :return:
+    """
+    from django.shortcuts import render_to_response
+    response = render_to_response("500.html", {})
+    response.status_code = 500
+    return response
 
 
 

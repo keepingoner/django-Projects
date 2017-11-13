@@ -20,7 +20,8 @@ import xadmin
 from users.views import user_login,user_register,active_user,forget_pwd,reset_pwd,modify_pwd,user_logout,IndexView
 from django.conf.urls.static import static
 from jiaoyu.settings import MEDIA_ROOT,MEDIA_URL
-
+from django.views.static import serve
+from django.conf import settings
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     #url(r'^$',TemplateView.as_view(template_name='index.html'),name='index'),
@@ -35,6 +36,8 @@ urlpatterns = [
     url(r'^org/',include('organizations.urls',namespace='org')),
     url(r'^course/',include('courses.urls',namespace='course')),
     url(r'^logout$', user_logout.as_view(), name='userlogout'),
+    url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT }, name='static'),
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT }, name='media'),
 ]+static(MEDIA_URL,document_root=MEDIA_ROOT)
 
 

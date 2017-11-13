@@ -25,7 +25,7 @@ class CustomBackend(ModelBackend):
 
 class user_login(View):
     def get(self, request):
-        return render(request,'login.html')
+        return render(request,'login.html',{})
 
     def post(self, request):
         user_name = request.POST.get('username', '')
@@ -40,7 +40,7 @@ class user_login(View):
 
                     login(request,user)
                     from django.core.urlresolvers import reverse
-                    return HttpResponseRedirect(reverse('index.html'))
+                    return HttpResponseRedirect(reverse('index'))
                 else:
                     return render(request,'login.html',{'msg':'用户未激活'})
             else:
@@ -136,7 +136,7 @@ class user_logout(View):
     def get(self, request):
         logout(request)
         from django.core.urlresolvers import reverse
-        return HttpResponseRedirect(reverse('index.html'))
+        return HttpResponseRedirect(reverse('index'))
 
 
 

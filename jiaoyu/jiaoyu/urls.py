@@ -15,15 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url,include
 from django.contrib import admin
-# import xadmin
-# from extra_app import xadmin.sit
+import xadmin
 from django.views.generic import TemplateView
 from users.views import user_login,user_register,active_user,forget_pwd,reset_pwd,modify_pwd
 from organizations.views import OrgList
 from django.conf.urls.static import static
 from jiaoyu.settings import MEDIA_ROOT,MEDIA_URL
 urlpatterns = [
-    # url(r'^xadmin/', xadmin.site.urls),
+    url(r'^xadmin/', xadmin.site.urls),
     url(r'^$',TemplateView.as_view(template_name='index.html'),name='index'),
     url(r'^userlogin$',user_login.as_view(),name='userlogin'),
     url(r'^register/$',user_register.as_view(),name='register'),

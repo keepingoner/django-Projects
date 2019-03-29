@@ -13,20 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from django.contrib import admin
 import xadmin
 from django.views.generic import TemplateView
-from users.views import user_login,user_register,active_user,forget_pwd,reset_pwd,modify_pwd
+from users.views import user_login, user_register, active_user, forget_pwd, reset_pwd, modify_pwd
 from organizations.views import OrgList
 from django.conf.urls.static import static
-from jiaoyu.settings import MEDIA_ROOT,MEDIA_URL
+from jiaoyu.settings import MEDIA_ROOT, MEDIA_URL
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^$',TemplateView.as_view(template_name='index.html'),name='index'),
     url(r'^userlogin$',user_login.as_view(),name='userlogin'),
     url(r'^register/$',user_register.as_view(),name='register'),
-    # url(r'^captcha/', include('captcha.urls')),
+    url(r'^captcha/', include('captcha.urls')),
     url(r'^active/(?P<active_code>.*)/$',active_user.as_view(),name='active'),
     url(r'^forgetpwd/$',forget_pwd.as_view(),name='forget'),
     url(r'^reset/(?P<reset_code>.*)/$',reset_pwd.as_view(),name='reset'),

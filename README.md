@@ -2,7 +2,7 @@
 
 ## 项目简介：
 
-Python3.6
+1. Python3.6
 
 django1.11
 

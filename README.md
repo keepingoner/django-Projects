@@ -2,9 +2,9 @@
 
 ## 项目简介：
 
-1. Python3.6
+1.Python3.6
 
-django1.11
+2.django1.11
 
 mysql数据库
 
